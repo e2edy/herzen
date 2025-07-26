@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Twitch Herz Overlay</title>
+  <style>
+    body {
+      margin: 0;
+      background: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 80px;
+      font-family: Arial, sans-serif;
+    }
+    .hearts {
+      user-select: none;
+    }
+    button {
+      font-size: 20px;
+      margin: 5px;
+    }
+    #adminPanel {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts">❤️ ❤️ ❤️</div>
+
+  <div id="adminPanel">
+    <button onclick="loseLife()">- Leben</button>
+    <button onclick="gainLife()">+ Leben</button>
+    <button onclick="resetLives()">Reset</button>
+  </div>
+
+  <script>
+    let lives = 3;
+    const maxLives = 3;
+    const heartsEl = document.getElementById("hearts");
+
+    function updateHearts() {
+      heartsEl.textContent = "❤️ ".repeat(lives) + "🤍 ".repeat(maxLives - lives);
+    }
+
+    function loseLife() {
+      if (lives > 0) {
+        lives--;
+        updateHearts();
+      }
+    }
+
+    function gainLife() {
+      if (lives < maxLives) {
+        lives++;
+        updateHearts();
+      }
+    }
+
+    function resetLives() {
+      lives = maxLives;
+      updateHearts();
+    }
+
+    // Admin-Panel anzeigen, wenn ?admin in der URL steht
+    if (window.location.search.includes("admin")) {
+      document.getElementById("adminPanel").style.display = "block";
+    }
+  </script>
+</body>
+</html>
